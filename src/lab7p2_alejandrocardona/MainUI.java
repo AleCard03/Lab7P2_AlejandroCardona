@@ -74,6 +74,12 @@ public class MainUI extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         CB_Vendedor = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        CB_Cliente = new javax.swing.JComboBox<>();
+        CB_Vehiculo = new javax.swing.JComboBox<>();
+        Btn_CrearArchivo = new javax.swing.JButton();
+        Btn_GuardarArchivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,13 +202,12 @@ public class MainUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Btn_Vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 911, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(130, 130, 130)
-                        .addComponent(TF_NombreVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Btn_Vendedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(130, 130, 130)
+                .addComponent(TF_NombreVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(517, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,8 +217,8 @@ public class MainUI extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(TF_NombreVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60)
-                .addComponent(Btn_Vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addComponent(Btn_Vendedor)
+                .addContainerGap(511, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Crear Vendedor", jPanel2);
@@ -285,15 +290,44 @@ public class MainUI extends javax.swing.JFrame {
 
         CB_Vendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel11.setText("Cliente");
+
+        jLabel12.setText("Vehiculo");
+
+        CB_Cliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        CB_Vehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        Btn_CrearArchivo.setText("Crear Archivo");
+        Btn_CrearArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_CrearArchivoMouseClicked(evt);
+            }
+        });
+
+        Btn_GuardarArchivo.setText("Guardar Archivo");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(142, 142, 142)
-                .addComponent(jLabel10)
-                .addGap(106, 106, 106)
-                .addComponent(CB_Vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(Btn_CrearArchivo)
+                        .addGap(146, 146, 146)
+                        .addComponent(Btn_GuardarArchivo))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12))
+                        .addGap(106, 106, 106)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(CB_Vendedor, 0, 316, Short.MAX_VALUE)
+                            .addComponent(CB_Cliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Vehiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(653, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -303,7 +337,19 @@ public class MainUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(CB_Vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(625, Short.MAX_VALUE))
+                .addGap(70, 70, 70)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(CB_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(81, 81, 81)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(CB_Vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(85, 85, 85)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Btn_CrearArchivo)
+                    .addComponent(Btn_GuardarArchivo))
+                .addContainerGap(322, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Realizar Venta", jPanel4);
@@ -396,11 +442,14 @@ public class MainUI extends javax.swing.JFrame {
         Vendedor v = new Vendedor(nombre);
         vendedores.add(v);
         
+        TF_NombreVendedor.setText("");
+        
         try {
             
             fwv = new FileWriter(Vendedores, true);
             bwv = new BufferedWriter(fwv);
             bwv.write(v.toString());
+            bwv.flush();
             
         } catch (Exception e) {
         
@@ -418,6 +467,7 @@ public class MainUI extends javax.swing.JFrame {
             System.out.println(e.getStackTrace());
             
         }
+        JOptionPane.showMessageDialog(this, "Se ha creado un vendedor de manera exitosa");
         
         
     }//GEN-LAST:event_Btn_VendedorMouseClicked
@@ -432,6 +482,10 @@ public class MainUI extends javax.swing.JFrame {
         Cliente c = new Cliente(nombre, profesion, sueldo, edad);
         clientes.add(c);
         
+        TF_NombreCliente.setText("");
+        TF_Profesion.setText("");
+        TF_SueldoDisponible.setText("");
+        
         File clients = new File ("./Clientes");
         FileWriter fwc = null;
         BufferedWriter bwc = null;
@@ -441,12 +495,15 @@ public class MainUI extends javax.swing.JFrame {
             fwc = new FileWriter (clients, true);
             bwc = new BufferedWriter(fwc);
             bwc.write(c.toString());
+            bwc.flush();
             
         } catch (Exception e) {
         
             System.out.println(e.getStackTrace());
             
         }
+        JOptionPane.showMessageDialog(this, "Se ha creado un cliente de manera exitosa");
+        
         
     }//GEN-LAST:event_Btn_CrearClienteMouseClicked
 
@@ -454,8 +511,27 @@ public class MainUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         cbVendedor();
+        cbCliente();
+        cbVehiculo();
         
     }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void Btn_CrearArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_CrearArchivoMouseClicked
+        // TODO add your handling code here:
+        
+        File ventasA = new File("./Ventas");
+        
+        try {
+            
+            
+            
+        } catch (Exception e) {
+        
+            System.out.println(e.getStackTrace());
+            
+        }
+        
+    }//GEN-LAST:event_Btn_CrearArchivoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -511,11 +587,44 @@ public class MainUI extends javax.swing.JFrame {
         
     }
     
+    private void cbVehiculo(){
+        
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel)CB_Vehiculo.getModel();
+        modelo.removeAllElements();
+        
+        for (Vehiculo vehiculos : vehiculos) {
+            
+            modelo.addElement(vehiculos.getMarca()+" "+vehiculos.getModelo());
+            
+        }
+        
+        CB_Vehiculo.setModel(modelo);
+        
+    }
+    private void cbCliente(){
+        
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel)CB_Cliente.getModel();
+        modelo.removeAllElements();
+        
+        for (Cliente clients : clientes) {
+            
+            modelo.addElement(clients.getNombre());
+            
+        }
+        
+        CB_Cliente.setModel(modelo);
+        
+    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnColor;
+    private javax.swing.JButton Btn_CrearArchivo;
     private javax.swing.JButton Btn_CrearCliente;
+    private javax.swing.JButton Btn_GuardarArchivo;
     private javax.swing.JButton Btn_Vendedor;
+    private javax.swing.JComboBox<String> CB_Cliente;
+    private javax.swing.JComboBox<String> CB_Vehiculo;
     private javax.swing.JComboBox<String> CB_Vendedor;
     private javax.swing.JSpinner ClienteSpinner;
     private javax.swing.JTextField TF_FechaVehiculo;
@@ -530,6 +639,8 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel VehiculoPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

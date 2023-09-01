@@ -56,7 +56,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "[\n\t" + nombre + ",\n\t" + profesion + ",\n\t" + sueldo + ",\n\t" + edad + "\n\t" + cantCompr +"\n]\n";
+        return "[\n\t" + nombre + ",\n\t" + profesion + ",\n\t" + sueldo + ",\n\t" + edad + "\n\t" + cantCompr +",\n]\n";
     }
     
     

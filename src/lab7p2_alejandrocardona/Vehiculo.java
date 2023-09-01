@@ -62,7 +62,7 @@ public class Vehiculo {
 
     @Override
     public String toString() {
-        return "[\n\t" +  marca + ",\n\t" + modelo + ",\n\t" + fecha + ",\n\t" + precio + "\n]\n";
+        return "[\n\t" +  marca + ",\n\t" + modelo + ",\n\t" + fecha + ",\n\t" + precio + ",\n]\n";
     }
     
     
