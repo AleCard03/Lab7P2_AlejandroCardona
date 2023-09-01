@@ -4,11 +4,26 @@
  */
 package lab7p2_alejandrocardona;
 
+import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JColorChooser;
+
 /**
  *
  * @author jets
  */
 public class MainUI extends javax.swing.JFrame {
+    static Color color;
+    static ArrayList<Vehiculo> vehiculos= new ArrayList();
+    static File carros = null;
+    FileWriter fw = null;
+    BufferedWriter bw = null;
 
     /**
      * Creates new form MainUI
@@ -26,21 +41,229 @@ public class MainUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        VehiculoPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        TF_Marca = new javax.swing.JTextField();
+        TF_Modelo = new javax.swing.JTextField();
+        TF_FechaVehiculo = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        BtnColor = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        TF_PrecioVehiculo = new javax.swing.JTextField();
+        VehiculoCrearBtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Ingrese la Marca del Vehiculo");
+
+        TF_Marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TF_MarcaActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Ingrese el Modelo del Vehiculo");
+
+        jLabel4.setText("Año del Vehiculo");
+
+        BtnColor.setText("Color");
+        BtnColor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnColorMouseClicked(evt);
+            }
+        });
+
+        jLabel5.setText("Precio de Venta");
+
+        TF_PrecioVehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TF_PrecioVehiculoActionPerformed(evt);
+            }
+        });
+
+        VehiculoCrearBtn.setText("Crear Vehiculo");
+        VehiculoCrearBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VehiculoCrearBtnMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout VehiculoPanelLayout = new javax.swing.GroupLayout(VehiculoPanel);
+        VehiculoPanel.setLayout(VehiculoPanelLayout);
+        VehiculoPanelLayout.setHorizontalGroup(
+            VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(45, 45, 45)
+                                    .addComponent(TF_Modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                                    .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VehiculoPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(117, 117, 117))
+                                        .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(45, 45, 45)))
+                                    .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(TF_FechaVehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                                        .addComponent(TF_PrecioVehiculo))))
+                            .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(BtnColor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(48, 48, 48)
+                                    .addComponent(TF_Marca, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                        .addGap(215, 215, 215)
+                        .addComponent(VehiculoCrearBtn)))
+                .addContainerGap())
+        );
+        VehiculoPanelLayout.setVerticalGroup(
+            VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(TF_Marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53)
+                .addComponent(BtnColor)
+                .addGap(68, 68, 68)
+                .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TF_Modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(61, 61, 61)
+                .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TF_FechaVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(55, 55, 55)
+                .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(TF_PrecioVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(102, 102, 102)
+                .addComponent(VehiculoCrearBtn)
+                .addContainerGap(189, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Crear Vehiculo", VehiculoPanel);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1268, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 723, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Crear Vendedor", jPanel2);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1268, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 723, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Crear Cliente", jPanel3);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1268, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 723, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Realizar Venta", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BtnColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnColorMouseClicked
+        // TODO add your handling code here:
+        
+        color = JColorChooser.showDialog(VehiculoPanel,"Seleccione el Color del Vehiculo a Crear", Color.blue);
+        
+    }//GEN-LAST:event_BtnColorMouseClicked
+
+    private void TF_MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_MarcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TF_MarcaActionPerformed
+
+    private void TF_PrecioVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_PrecioVehiculoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TF_PrecioVehiculoActionPerformed
+
+    private void VehiculoCrearBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VehiculoCrearBtnMouseClicked
+        // TODO add your handling code here:
+        
+        String marca = TF_Marca.getText();
+        String modelo = TF_Modelo.getText();
+        int fecha = Integer.parseInt(TF_FechaVehiculo.getText());
+        Double precio = Double.parseDouble(TF_PrecioVehiculo.getText());
+        Vehiculo Carro = new Vehiculo(marca, modelo, color, fecha, precio);
+        vehiculos.add(Carro);
+        
+        
+        
+        try {
+            
+            
+            fw = new FileWriter(carros, true);
+            bw = new BufferedWriter(fw);
+            bw.write(Carro.toString());
+            
+            bw.flush();
+        } catch (Exception e) {
+            
+            System.out.println(e.getStackTrace());
+            
+        }
+        
+        try {
+            bw.close();
+            fw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_VehiculoCrearBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -68,7 +291,9 @@ public class MainUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        carros = new File("./Vehiculos");
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -78,5 +303,20 @@ public class MainUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnColor;
+    private javax.swing.JTextField TF_FechaVehiculo;
+    private javax.swing.JTextField TF_Marca;
+    private javax.swing.JTextField TF_Modelo;
+    private javax.swing.JTextField TF_PrecioVehiculo;
+    private javax.swing.JButton VehiculoCrearBtn;
+    private javax.swing.JPanel VehiculoPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

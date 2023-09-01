@@ -34,6 +34,11 @@ public class Vendedor {
     public void setCantDinero(double cantDinero) {
         this.cantDinero = cantDinero;
     }
+
+    @Override
+    public String toString() {
+        return "[\n\t" + nombre + ",\n\t" + cantCarros + ", ,\n\t" + cantDinero +"]\n";
+    }
     
     
     

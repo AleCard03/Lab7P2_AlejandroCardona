@@ -8,14 +8,25 @@ public class Vehiculo {
     
     private String marca, modelo;
     private Color color;
-    private Date fecha;
+    private int fecha;
+    private Double precio;
 
-    public Vehiculo(String marca, String modelo, Color color, Date fecha) {
+    public Vehiculo(String marca, String modelo, Color color, int fecha, Double precio) {
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
         this.fecha = fecha;
+        this.precio = precio;
     }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+    
 
     public String getMarca() {
         return marca;
@@ -41,13 +52,19 @@ public class Vehiculo {
         this.color = color;
     }
 
-    public Date getFecha() {
+    public int getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(int fecha) {
         this.fecha = fecha;
     }
+
+    @Override
+    public String toString() {
+        return "[\n\t" +  marca + ",\n\t" + modelo + ",\n\t" + fecha + ",\n\t" + precio + "\n]\n";
+    }
+    
     
     
     
