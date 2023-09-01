@@ -5,7 +5,7 @@ public class Cliente {
     
     private String nombre , profesion;
     private double sueldo;
-    private int edad;
+    private int edad, cantCompr;
 
     public Cliente(String nombre, String profesion, double sueldo, int edad) {
         this.nombre = nombre;
@@ -14,6 +14,14 @@ public class Cliente {
         this.edad = edad;
     }
 
+    public int getCantCompr() {
+        return cantCompr;
+    }
+
+    public void setCantCompr(int cantCompr) {
+        this.cantCompr = cantCompr;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -44,6 +52,11 @@ public class Cliente {
 
     public void setEdad(int edad) {
         this.edad = edad;
+    }
+
+    @Override
+    public String toString() {
+        return "[\n\t" + nombre + ",\n\t" + profesion + ",\n\t" + sueldo + ",\n\t" + edad + "\n\t" + cantCompr +"\n]\n";
     }
     
     
