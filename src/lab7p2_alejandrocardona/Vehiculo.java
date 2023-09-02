@@ -7,11 +7,11 @@ import java.util.Date;
 public class Vehiculo {
     
     private String marca, modelo;
-    private Color color;
+    private String color;
     private int fecha;
     private Double precio;
 
-    public Vehiculo(String marca, String modelo, Color color, int fecha, Double precio) {
+    public Vehiculo(String marca, String modelo, String color, int fecha, Double precio) {
         this.marca = marca;
         this.modelo = modelo;
         this.color = color;
@@ -44,11 +44,11 @@ public class Vehiculo {
         this.modelo = modelo;
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 

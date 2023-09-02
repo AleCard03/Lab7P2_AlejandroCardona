@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import javax.swing.JOptionPane;
  * @author jets
  */
 public class MainUI extends javax.swing.JFrame {
+    String FileEdited;
     static Color color;
     static ArrayList<Vehiculo> vehiculos= new ArrayList();
     static ArrayList<Vendedor> vendedores = new ArrayList();
@@ -48,6 +50,7 @@ public class MainUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        FileChooserJSONs = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         VehiculoPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -56,10 +59,11 @@ public class MainUI extends javax.swing.JFrame {
         TF_FechaVehiculo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        BtnColor = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         TF_PrecioVehiculo = new javax.swing.JTextField();
         VehiculoCrearBtn = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        TF_Color = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         TF_NombreVendedor = new javax.swing.JTextField();
@@ -84,6 +88,10 @@ public class MainUI extends javax.swing.JFrame {
         Btn_CrearArchivo = new javax.swing.JButton();
         Btn_GuardarArchivo = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TA_ModJSON = new javax.swing.JTextArea();
+        Btn_SelectArchivo = new javax.swing.JButton();
+        Btn_ModificarArchivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,13 +118,6 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel4.setText("Año del Vehiculo");
 
-        BtnColor.setText("Color");
-        BtnColor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnColorMouseClicked(evt);
-            }
-        });
-
         jLabel5.setText("Precio de Venta");
 
         TF_PrecioVehiculo.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +132,8 @@ public class MainUI extends javax.swing.JFrame {
                 VehiculoCrearBtnMouseClicked(evt);
             }
         });
+
+        jLabel13.setText("Ingrese el Color del Vehiculo");
 
         javax.swing.GroupLayout VehiculoPanelLayout = new javax.swing.GroupLayout(VehiculoPanel);
         VehiculoPanel.setLayout(VehiculoPanelLayout);
@@ -157,12 +160,14 @@ public class MainUI extends javax.swing.JFrame {
                                     .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(TF_FechaVehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                                         .addComponent(TF_PrecioVehiculo))))
-                            .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(BtnColor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(VehiculoPanelLayout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(48, 48, 48)
-                                    .addComponent(TF_Marca, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(VehiculoPanelLayout.createSequentialGroup()
+                                .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(48, 48, 48)
+                                .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(TF_Marca, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                                    .addComponent(TF_Color)))))
                     .addGroup(VehiculoPanelLayout.createSequentialGroup()
                         .addGap(215, 215, 215)
                         .addComponent(VehiculoCrearBtn)))
@@ -175,9 +180,11 @@ public class MainUI extends javax.swing.JFrame {
                 .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(TF_Marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
-                .addComponent(BtnColor)
-                .addGap(68, 68, 68)
+                .addGap(57, 57, 57)
+                .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(TF_Color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
                 .addGroup(VehiculoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_Modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -369,15 +376,57 @@ public class MainUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Realizar Venta", jPanel4);
 
+        TA_ModJSON.setColumns(20);
+        TA_ModJSON.setLineWrap(true);
+        TA_ModJSON.setRows(5);
+        TA_ModJSON.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(TA_ModJSON);
+
+        Btn_SelectArchivo.setText("Seleccionar Archivo");
+        Btn_SelectArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_SelectArchivoMouseClicked(evt);
+            }
+        });
+        Btn_SelectArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_SelectArchivoActionPerformed(evt);
+            }
+        });
+
+        Btn_ModificarArchivo.setText("Modificar Archivo");
+        Btn_ModificarArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_ModificarArchivoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1268, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Btn_SelectArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(Btn_ModificarArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(109, 109, 109)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 723, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(Btn_SelectArchivo)
+                        .addGap(49, 49, 49)
+                        .addComponent(Btn_ModificarArchivo)))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Modificar JSONs", jPanel1);
@@ -401,13 +450,6 @@ public class MainUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnColorMouseClicked
-        // TODO add your handling code here:
-        
-        color = JColorChooser.showDialog(VehiculoPanel,"Seleccione el Color del Vehiculo a Crear", Color.blue);
-        
-    }//GEN-LAST:event_BtnColorMouseClicked
-
     private void TF_MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_MarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_MarcaActionPerformed
@@ -421,6 +463,7 @@ public class MainUI extends javax.swing.JFrame {
         
         String marca = TF_Marca.getText();
         String modelo = TF_Modelo.getText();
+        String color = TF_Color.getText();
         int fecha = Integer.parseInt(TF_FechaVehiculo.getText());
         Double precio = Double.parseDouble(TF_PrecioVehiculo.getText());
         Vehiculo Carro = new Vehiculo(marca, modelo, color, fecha, precio);
@@ -538,6 +581,7 @@ public class MainUI extends javax.swing.JFrame {
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         // TODO add your handling code here:
         
+        Btn_ModificarArchivo.setVisible(false);
         cbVendedor();
         cbCliente();
         cbVehiculo();
@@ -561,6 +605,76 @@ public class MainUI extends javax.swing.JFrame {
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void Btn_SelectArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_SelectArchivoMouseClicked
+        // TODO add your handling code here:
+        
+        jPanel1.add(FileChooserJSONs);
+        FileChooserJSONs.showOpenDialog(jPanel1);
+        
+        File edit = FileChooserJSONs.getSelectedFile();
+        
+        try {
+            Scanner read = new Scanner(edit);
+            String temp = "";
+            while(read.hasNext()){
+                
+//                if(read.next().equals(";")){
+//                    
+//                    temp+=read.next()+"\n";
+//                    
+//                }
+//                else if(read.next().equals("[")||read.next().equals("]")){
+//                    
+//                    temp+=read.next()+"\n";
+//                    
+//                }
+//                else{
+//                    
+                    temp+=read.next();
+                    
+//                }
+                
+                
+            }
+            
+            TA_ModJSON.setText(temp);
+            FileEdited = edit.getName();
+            System.out.println(FileEdited);
+            Btn_ModificarArchivo.setVisible(true);
+            
+            
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }//GEN-LAST:event_Btn_SelectArchivoMouseClicked
+
+    private void Btn_SelectArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_SelectArchivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Btn_SelectArchivoActionPerformed
+
+    private void Btn_ModificarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ModificarArchivoMouseClicked
+        // TODO add your handling code here:
+        
+        try {
+                FileWriter fw = new FileWriter("./"+FileEdited);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write(TA_ModJSON.getText());
+                bw.flush();
+            } catch (IOException ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                fw.close();
+                bw.close();
+            } catch (Exception e) {
+            }
+        
+    }//GEN-LAST:event_Btn_ModificarArchivoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -781,15 +895,19 @@ public class MainUI extends javax.swing.JFrame {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnColor;
     private javax.swing.JButton Btn_CrearArchivo;
     private javax.swing.JButton Btn_CrearCliente;
     private javax.swing.JButton Btn_GuardarArchivo;
+    private javax.swing.JButton Btn_ModificarArchivo;
+    private javax.swing.JButton Btn_SelectArchivo;
     private javax.swing.JButton Btn_Vendedor;
     private javax.swing.JComboBox<String> CB_Cliente;
     private javax.swing.JComboBox<String> CB_Vehiculo;
     private javax.swing.JComboBox<String> CB_Vendedor;
     private javax.swing.JSpinner ClienteSpinner;
+    private javax.swing.JFileChooser FileChooserJSONs;
+    private javax.swing.JTextArea TA_ModJSON;
+    private javax.swing.JTextField TF_Color;
     private javax.swing.JTextField TF_FechaVehiculo;
     private javax.swing.JTextField TF_Marca;
     private javax.swing.JTextField TF_Modelo;
@@ -804,6 +922,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -816,6 +935,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
