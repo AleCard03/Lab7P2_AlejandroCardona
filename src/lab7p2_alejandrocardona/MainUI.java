@@ -19,17 +19,22 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
  * @author jets
  */
 public class MainUI extends javax.swing.JFrame {
+
     String FileEdited, dir;
     static Color color;
-    static ArrayList<Vehiculo> vehiculos= new ArrayList();
+    static ArrayList<Vehiculo> vehiculos = new ArrayList();
     static ArrayList<Vendedor> vendedores = new ArrayList();
     static ArrayList<Cliente> clientes = new ArrayList();
+    static ArrayList<Venta> ventas = new ArrayList();
+    static ArrayList<String> dias = new ArrayList();
     static File carros = null;
     FileWriter fw = null;
     BufferedWriter bw = null;
@@ -94,6 +99,9 @@ public class MainUI extends javax.swing.JFrame {
         Btn_ModificarArchivo = new javax.swing.JButton();
         Btn_SelDir = new javax.swing.JButton();
         Btn_NewArchivo = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Tree_Datos = new javax.swing.JTree();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -330,6 +338,11 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         Btn_GuardarArchivo.setText("Guardar Archivo");
+        Btn_GuardarArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_GuardarArchivoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -453,6 +466,27 @@ public class MainUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Modificar JSONs", jPanel1);
 
+        jScrollPane2.setViewportView(Tree_Datos);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(552, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(103, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Tree", jPanel5);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -482,7 +516,7 @@ public class MainUI extends javax.swing.JFrame {
 
     private void VehiculoCrearBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VehiculoCrearBtnMouseClicked
         // TODO add your handling code here:
-        
+
         String marca = TF_Marca.getText();
         String modelo = TF_Modelo.getText();
         String color = TF_Color.getText();
@@ -490,30 +524,25 @@ public class MainUI extends javax.swing.JFrame {
         Double precio = Double.parseDouble(TF_PrecioVehiculo.getText());
         Vehiculo Carro = new Vehiculo(marca, modelo, color, fecha, precio);
         vehiculos.add(Carro);
-        
+
         TF_Marca.setText("");
         TF_Modelo.setText("");
         TF_FechaVehiculo.setText("");
         TF_PrecioVehiculo.setText("");
-        
-        
-        
-        
-        
+
         try {
-            
-            
+
             fw = new FileWriter(carros, true);
             bw = new BufferedWriter(fw);
             bw.write(Carro.toString());
-            
+
             bw.flush();
         } catch (Exception e) {
-            
+
             System.out.println(e.getStackTrace());
-            
+
         }
-        
+
         try {
             bw.close();
             fw.close();
@@ -521,108 +550,147 @@ public class MainUI extends javax.swing.JFrame {
             Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(VehiculoPanel, "El Vehiculo ha sido creado Exitosamente");
-        
+
     }//GEN-LAST:event_VehiculoCrearBtnMouseClicked
 
     private void Btn_VendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_VendedorMouseClicked
         // TODO add your handling code here:
-        
-        File Vendedores = new File ("./Vendedores");
+
+        File Vendedores = new File("./Vendedores");
         FileWriter fwv = null;
         BufferedWriter bwv = null;
-        
+
         String nombre = TF_NombreVendedor.getText();
         Vendedor v = new Vendedor(nombre);
         vendedores.add(v);
-        
+
         TF_NombreVendedor.setText("");
-        
+
         try {
-            
+
             fwv = new FileWriter(Vendedores, true);
             bwv = new BufferedWriter(fwv);
             bwv.write(v.toString());
             bwv.flush();
-            
+
         } catch (Exception e) {
-        
-            
-            
+
         }
-        
+
         try {
-            
+
             bwv.close();
             fwv.close();
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e.getStackTrace());
-            
+
         }
         JOptionPane.showMessageDialog(this, "Se ha creado un vendedor de manera exitosa");
-        
-        
+
+
     }//GEN-LAST:event_Btn_VendedorMouseClicked
 
     private void Btn_CrearClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_CrearClienteMouseClicked
         // TODO add your handling code here:
-        
+
         String nombre = TF_NombreCliente.getText();
         String profesion = TF_Profesion.getText();
-        int edad = (Integer)ClienteSpinner.getValue();
+        int edad = (Integer) ClienteSpinner.getValue();
         Double sueldo = Double.parseDouble(TF_SueldoDisponible.getText());
         Cliente c = new Cliente(nombre, profesion, sueldo, edad);
         clientes.add(c);
-        
+
         TF_NombreCliente.setText("");
         TF_Profesion.setText("");
         TF_SueldoDisponible.setText("");
-        
-        File clients = new File ("./Clientes");
+
+        File clients = new File("./Clientes");
         FileWriter fwc = null;
         BufferedWriter bwc = null;
-        
+
         try {
-            
-            fwc = new FileWriter (clients, true);
+
+            fwc = new FileWriter(clients, true);
             bwc = new BufferedWriter(fwc);
             bwc.write(c.toString());
             bwc.flush();
-            
+
         } catch (Exception e) {
-        
+
             System.out.println(e.getStackTrace());
-            
+
         }
         JOptionPane.showMessageDialog(this, "Se ha creado un cliente de manera exitosa");
-        
-        
+
+
     }//GEN-LAST:event_Btn_CrearClienteMouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         // TODO add your handling code here:
-        
+
         Btn_ModificarArchivo.setVisible(false);
         Btn_NewArchivo.setVisible(false);
         cbVendedor();
         cbCliente();
         cbVehiculo();
         
+        
+        //////////////////////////////////////////////
+        
+        DefaultTreeModel modelo = (DefaultTreeModel)Tree_Datos.getModel();
+        
+        DefaultMutableTreeNode Days = (DefaultMutableTreeNode)modelo.getRoot();
+        Days.setAllowsChildren(rootPaneCheckingEnabled);
+        Tree_Datos.setModel(modelo);
+        
+        
+
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void Btn_CrearArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_CrearArchivoMouseClicked
         // TODO add your handling code here:
+
+        Cliente c = clientes.get(CB_Cliente.getSelectedIndex());
+        Vendedor v = vendedores.get(CB_Vendedor.getSelectedIndex());
+        Vehiculo ve = vehiculos.get(CB_Vehiculo.getSelectedIndex());
+        vendedores.get(CB_Vendedor.getSelectedIndex()).setCantCarros(vendedores.get(CB_Vendedor.getSelectedIndex()).getCantCarros()+1);
+        vendedores.get(CB_Vendedor.getSelectedIndex()).setCantDinero(vendedores.get(CB_Vendedor.getSelectedIndex()).getCantDinero()+1);
         
-        
-        
+        if (c.getSueldo() >= ve.getPrecio()) {
+
+            JOptionPane.showMessageDialog(this, "Se ha realizado la venta de manera exitosa");
+            Venta ven = new Venta(v, c, ve.getPrecio(), ve);
+            ventas.add(ven);
+            File archivo = null;
+            FileWriter fw = null;
+            BufferedWriter bw = null;
+            try {
+
+                archivo = new File("./Ventas");
+                fw = new FileWriter(archivo, true);
+                bw = new BufferedWriter(fw);
+                bw.write(ven.toString());
+                bw.flush();
+                bw.close();
+                fw.close();
+
+            } catch (Exception e) {
+            }
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "No se ha efectuado la venta");
+
+        }
+
     }//GEN-LAST:event_Btn_CrearArchivoMouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         // TODO add your handling code here:
-        
-        
-        
+
+
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
@@ -631,17 +699,17 @@ public class MainUI extends javax.swing.JFrame {
 
     private void Btn_SelectArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_SelectArchivoMouseClicked
         // TODO add your handling code here:
-        
+
         jPanel1.add(FileChooserJSONs);
         FileChooserJSONs.showOpenDialog(jPanel1);
-        
+
         File edit = FileChooserJSONs.getSelectedFile();
-        
+
         try {
             Scanner read = new Scanner(edit);
             String temp = "";
-            while(read.hasNext()){
-                
+            while (read.hasNext()) {
+
 //                if(read.next().equals(";")){
 //                    
 //                    temp+=read.next()+"\n";
@@ -654,26 +722,21 @@ public class MainUI extends javax.swing.JFrame {
 //                }
 //                else{
 //                    
-                    temp+=read.next();
-                    
+                temp += read.next();
+
 //                }
-                
-                
             }
-            
+
             TA_ModJSON.setText(temp);
             FileEdited = edit.getName();
             System.out.println(FileEdited);
             Btn_ModificarArchivo.setVisible(true);
-            
-            
-            
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_Btn_SelectArchivoMouseClicked
 
     private void Btn_SelectArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_SelectArchivoActionPerformed
@@ -682,56 +745,87 @@ public class MainUI extends javax.swing.JFrame {
 
     private void Btn_ModificarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ModificarArchivoMouseClicked
         // TODO add your handling code here:
-        
+
         try {
-                FileWriter fw = new FileWriter("./"+FileEdited);
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write(TA_ModJSON.getText());
-                bw.flush();
-            } catch (IOException ex) {
-                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                fw.close();
-                bw.close();
-            } catch (Exception e) {
-            }
-        
+            FileWriter fw = new FileWriter("./" + FileEdited);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(TA_ModJSON.getText());
+            bw.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            fw.close();
+            bw.close();
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_Btn_ModificarArchivoMouseClicked
 
     private void Btn_SelDirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_SelDirMouseClicked
         // TODO add your handling code here:
-        
+
         jPanel1.add(FileChooserJSONs);
-        
+
         FileChooserJSONs.showSaveDialog(jPanel1);
         dir = FileChooserJSONs.getCurrentDirectory().getPath();
-        
+
         System.out.println(dir);
         Btn_NewArchivo.setVisible(true);
-        
+
     }//GEN-LAST:event_Btn_SelDirMouseClicked
 
     private void Btn_NewArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_NewArchivoMouseClicked
         // TODO add your handling code here:
-        
+
         try {
-            
+
             String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo a crear");
-            File archivo = new File (dir+"\\"+nombre);
+            File archivo = new File(dir + "\\" + nombre);
             FileWriter fw = new FileWriter(archivo);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(TA_ModJSON.getText());
             bw.flush();
             bw.close();
             fw.close();
-            
+
         } catch (Exception e) {
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_Btn_NewArchivoMouseClicked
+
+    private void Btn_GuardarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_GuardarArchivoMouseClicked
+        // TODO add your handling code here:
+
+        File clientesA = null;
+        String dia = "";
+
+        try {
+            clientesA = new File("./Ventas");
+            Scanner read = new Scanner(clientesA);
+            while (read.hasNext()) {
+
+                dia += read.next();
+
+            }
+        } catch (Exception e) {
+        }
+        dias.add(dia);
+        
+        /////////////////////////
+        DefaultTreeModel modelo = (DefaultTreeModel) Tree_Datos.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+        DefaultMutableTreeNode Vehiculos = new DefaultMutableTreeNode();
+        for (Vehiculo vehiculo : vehiculos) {
+            Vehiculos.add(new DefaultMutableTreeNode(vehiculo));
+        }
+        Vehiculos.setParent(raiz);
+        modelo.setRoot(raiz);
+        Tree_Datos.setModel(modelo);
+        
+        
+    }//GEN-LAST:event_Btn_GuardarArchivoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -759,198 +853,178 @@ public class MainUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         carros = new File("./Vehiculos");
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainUI().setVisible(true);
             }
         });
-        
+
     }
 
-    
-    private void cbVendedor(){
-        
-        DefaultComboBoxModel modelo = (DefaultComboBoxModel)CB_Vendedor.getModel();
+    private void cbVendedor() {
+
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) CB_Vendedor.getModel();
         modelo.removeAllElements();
-        
+
         File vendedoresA = null;
-        
-        
-        
+
         try {
-            
+
             vendedoresA = new File("./Vendedores");
             String vendedoresT = "";
             Scanner read = new Scanner(vendedoresA);
-            while(read.hasNext()){
-                
-                vendedoresT+= read.next();
-            
+            while (read.hasNext()) {
+
+                vendedoresT += read.next();
+
             }
-            
-            String [] vendedoresArray = vendedoresT.split("]");
-           
-            String [] tokens;
+
+            String[] vendedoresArray = vendedoresT.split("]");
+
+            String[] tokens;
             for (int i = 0; i < vendedoresArray.length; i++) {
-                
+
                 tokens = vendedoresArray[i].split(",");
                 for (int j = 0; j < tokens.length; j++) {
-                    
-                    if(j == 0){
+
+                    if (j == 0) {
                         String pez = "";
                         for (int k = 1; k < tokens[j].length(); k++) {
-                            
-                            pez+=tokens[j].charAt(k);
-                            
+
+                            pez += tokens[j].charAt(k);
+
                         }
-                        
+
                         modelo.addElement(pez);
-                        
+
                     }
-                    
+
                 }
-                
+
             }
-            
-            
-            
-            
-            
-            
-            
+
         } catch (Exception e) {
-        
+
             System.out.println(e.getMessage());
-            
+
         }
-        
+
         CB_Vendedor.setModel(modelo);
-        
-        
-        
+
     }
-    
-    private void cbVehiculo(){
-        
-        DefaultComboBoxModel modelo = (DefaultComboBoxModel)CB_Vehiculo.getModel();
+
+    private void cbVehiculo() {
+
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) CB_Vehiculo.getModel();
         modelo.removeAllElements();
-        
+
         File VehiculosA = null;
-        
-        
-        
+
         try {
-            
+
             VehiculosA = new File("./Vehiculos");
             String vehiculosT = "";
             Scanner read = new Scanner(VehiculosA);
-            while(read.hasNext()){
-                
-                vehiculosT+= read.next();
-            
+            while (read.hasNext()) {
+
+                vehiculosT += read.next();
+
             }
-            
-            String [] vehiculosArray = vehiculosT.split("]");
-           
-            String [] tokens;
+
+            String[] vehiculosArray = vehiculosT.split("]");
+
+            String[] tokens;
             for (int i = 0; i < vehiculosArray.length; i++) {
-                
+
                 tokens = vehiculosArray[i].split(";");
                 for (int j = 0; j < tokens.length; j++) {
-                    
-                    if(j == 0){
+
+                    if (j == 0) {
                         String pez = "";
                         for (int k = 1; k < tokens[j].length(); k++) {
-                            
-                            pez+=tokens[j].charAt(k);
-                            
+
+                            pez += tokens[j].charAt(k);
+
                         }
-                        
+
                         modelo.addElement(pez);
-                        
+
                     }
-                    
+
                 }
-                
-            }    
-            
+
+            }
+
         } catch (Exception e) {
-        
+
             System.out.println(e.getMessage());
-            
+
         }
-        
-        
+
         CB_Vehiculo.setModel(modelo);
-        
+
     }
-    private void cbCliente(){
-        
-        DefaultComboBoxModel modelo = (DefaultComboBoxModel)CB_Cliente.getModel();
+
+    private void cbCliente() {
+
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) CB_Cliente.getModel();
         modelo.removeAllElements();
-        
+
         File clientesA = null;
-        
-        
-        
+
         try {
-            
+
             clientesA = new File("./Clientes");
             String clientesT = "";
             Scanner read = new Scanner(clientesA);
-            while(read.hasNext()){
-                
-                clientesT+= read.next();
-            
+            while (read.hasNext()) {
+
+                clientesT += read.next();
+
             }
-            
-            String [] clientesArray = clientesT.split("]");
-           
-            String [] tokens;
+
+            String[] clientesArray = clientesT.split("]");
+
+            String[] tokens;
             for (int i = 0; i < clientesArray.length; i++) {
-                
+
                 tokens = clientesArray[i].split(",");
-                
+
                 for (int j = 0; j < tokens.length; j++) {
-                    
-                    if(j == 0){
-                        
+
+                    if (j == 0) {
+
                         String pez = "";
                         for (int k = 1; k < tokens[j].length(); k++) {
-                            
-                            pez+=tokens[j].charAt(k);
-                            
+
+                            pez += tokens[j].charAt(k);
+
                         }
-                        
+
                         modelo.addElement(pez);
-                        
+
                     }
-                    
+
                 }
-                
+
             }
             read.close();
-            
-            
-            
-            
-            
-            
+
         } catch (Exception e) {
-        
+
             System.out.println(e.getStackTrace());
-            
+
         }
-        
+
         CB_Cliente.setModel(modelo);
-        
+
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_CrearArchivo;
     private javax.swing.JButton Btn_CrearCliente;
@@ -975,6 +1049,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JTextField TF_PrecioVehiculo;
     private javax.swing.JTextField TF_Profesion;
     private javax.swing.JTextField TF_SueldoDisponible;
+    private javax.swing.JTree Tree_Datos;
     private javax.swing.JButton VehiculoCrearBtn;
     private javax.swing.JPanel VehiculoPanel;
     private javax.swing.JLabel jLabel1;
@@ -994,7 +1069,9 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,13 +3,15 @@ package lab7p2_alejandrocardona;
 
 import java.awt.Color;
 import java.util.Date;
+import java.util.Random;
 
 public class Vehiculo {
-    
+    Random rng = new Random();
     private String marca, modelo;
     private String color;
     private int fecha;
     private Double precio;
+    private int ID;
 
     public Vehiculo(String marca, String modelo, String color, int fecha, Double precio) {
         this.marca = marca;
@@ -17,7 +19,19 @@ public class Vehiculo {
         this.color = color;
         this.fecha = fecha;
         this.precio = precio;
+        this.ID = rng.nextInt(1000);
     }
+
+    
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+    
+    
 
     public Double getPrecio() {
         return precio;
