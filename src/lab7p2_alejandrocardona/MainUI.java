@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  * @author jets
  */
 public class MainUI extends javax.swing.JFrame {
-    String FileEdited;
+    String FileEdited, dir;
     static Color color;
     static ArrayList<Vehiculo> vehiculos= new ArrayList();
     static ArrayList<Vendedor> vendedores = new ArrayList();
@@ -92,6 +92,8 @@ public class MainUI extends javax.swing.JFrame {
         TA_ModJSON = new javax.swing.JTextArea();
         Btn_SelectArchivo = new javax.swing.JButton();
         Btn_ModificarArchivo = new javax.swing.JButton();
+        Btn_SelDir = new javax.swing.JButton();
+        Btn_NewArchivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -401,6 +403,20 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
+        Btn_SelDir.setText("Seleccionar Directorio");
+        Btn_SelDir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_SelDirMouseClicked(evt);
+            }
+        });
+
+        Btn_NewArchivo.setText("Crear Archivo");
+        Btn_NewArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_NewArchivoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -409,7 +425,9 @@ public class MainUI extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Btn_SelectArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                    .addComponent(Btn_ModificarArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Btn_ModificarArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Btn_SelDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Btn_NewArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(109, 109, 109)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(92, Short.MAX_VALUE))
@@ -425,7 +443,11 @@ public class MainUI extends javax.swing.JFrame {
                         .addGap(85, 85, 85)
                         .addComponent(Btn_SelectArchivo)
                         .addGap(49, 49, 49)
-                        .addComponent(Btn_ModificarArchivo)))
+                        .addComponent(Btn_ModificarArchivo)
+                        .addGap(68, 68, 68)
+                        .addComponent(Btn_SelDir)
+                        .addGap(74, 74, 74)
+                        .addComponent(Btn_NewArchivo)))
                 .addContainerGap(107, Short.MAX_VALUE))
         );
 
@@ -582,6 +604,7 @@ public class MainUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         Btn_ModificarArchivo.setVisible(false);
+        Btn_NewArchivo.setVisible(false);
         cbVendedor();
         cbCliente();
         cbVehiculo();
@@ -675,6 +698,40 @@ public class MainUI extends javax.swing.JFrame {
             }
         
     }//GEN-LAST:event_Btn_ModificarArchivoMouseClicked
+
+    private void Btn_SelDirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_SelDirMouseClicked
+        // TODO add your handling code here:
+        
+        jPanel1.add(FileChooserJSONs);
+        
+        FileChooserJSONs.showSaveDialog(jPanel1);
+        dir = FileChooserJSONs.getCurrentDirectory().getPath();
+        
+        System.out.println(dir);
+        Btn_NewArchivo.setVisible(true);
+        
+    }//GEN-LAST:event_Btn_SelDirMouseClicked
+
+    private void Btn_NewArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_NewArchivoMouseClicked
+        // TODO add your handling code here:
+        
+        try {
+            
+            String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo a crear");
+            File archivo = new File (dir+"\\"+nombre);
+            FileWriter fw = new FileWriter(archivo);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(TA_ModJSON.getText());
+            bw.flush();
+            bw.close();
+            fw.close();
+            
+        } catch (Exception e) {
+        }
+        
+        
+        
+    }//GEN-LAST:event_Btn_NewArchivoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -899,6 +956,8 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton Btn_CrearCliente;
     private javax.swing.JButton Btn_GuardarArchivo;
     private javax.swing.JButton Btn_ModificarArchivo;
+    private javax.swing.JButton Btn_NewArchivo;
+    private javax.swing.JButton Btn_SelDir;
     private javax.swing.JButton Btn_SelectArchivo;
     private javax.swing.JButton Btn_Vendedor;
     private javax.swing.JComboBox<String> CB_Cliente;
