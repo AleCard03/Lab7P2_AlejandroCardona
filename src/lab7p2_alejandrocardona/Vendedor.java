@@ -37,7 +37,7 @@ public class Vendedor {
 
     @Override
     public String toString() {
-        return "[\n\t" + nombre + ",\n\t" + cantCarros + ", ,\n\t" + cantDinero +",\n]\n";
+        return "[\n\t" + nombre + ",\n\t" + cantCarros + ",\n\t" + cantDinero +",\n]\n";
     }
     
     

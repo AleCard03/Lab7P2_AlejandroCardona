@@ -5,11 +5,14 @@
 package lab7p2_alejandrocardona;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -80,9 +83,15 @@ public class MainUI extends javax.swing.JFrame {
         CB_Vehiculo = new javax.swing.JComboBox<>();
         Btn_CrearArchivo = new javax.swing.JButton();
         Btn_GuardarArchivo = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane1MouseClicked(evt);
@@ -286,6 +295,12 @@ public class MainUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Crear Cliente", jPanel3);
 
+        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel4MouseClicked(evt);
+            }
+        });
+
         jLabel10.setText("Vendedor");
 
         CB_Vendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -353,6 +368,19 @@ public class MainUI extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Realizar Venta", jPanel4);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1268, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 723, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Modificar JSONs", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -519,19 +547,20 @@ public class MainUI extends javax.swing.JFrame {
     private void Btn_CrearArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_CrearArchivoMouseClicked
         // TODO add your handling code here:
         
-        File ventasA = new File("./Ventas");
         
-        try {
-            
-            
-            
-        } catch (Exception e) {
-        
-            System.out.println(e.getStackTrace());
-            
-        }
         
     }//GEN-LAST:event_Btn_CrearArchivoMouseClicked
+
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_jPanel4MouseClicked
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1StateChanged
 
     /**
      * @param args the command line arguments
@@ -577,13 +606,60 @@ public class MainUI extends javax.swing.JFrame {
         DefaultComboBoxModel modelo = (DefaultComboBoxModel)CB_Vendedor.getModel();
         modelo.removeAllElements();
         
-        for (Vendedor vendedor : vendedores) {
+        File vendedoresA = null;
+        
+        
+        
+        try {
             
-            modelo.addElement(vendedor.getNombre());
+            vendedoresA = new File("./Vendedores");
+            String vendedoresT = "";
+            Scanner read = new Scanner(vendedoresA);
+            while(read.hasNext()){
+                
+                vendedoresT+= read.next();
+            
+            }
+            
+            String [] vendedoresArray = vendedoresT.split("]");
+           
+            String [] tokens;
+            for (int i = 0; i < vendedoresArray.length; i++) {
+                
+                tokens = vendedoresArray[i].split(",");
+                for (int j = 0; j < tokens.length; j++) {
+                    
+                    if(j == 0){
+                        String pez = "";
+                        for (int k = 1; k < tokens[j].length(); k++) {
+                            
+                            pez+=tokens[j].charAt(k);
+                            
+                        }
+                        
+                        modelo.addElement(pez);
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            
+            
+            
+            
+            
+            
+        } catch (Exception e) {
+        
+            System.out.println(e.getMessage());
             
         }
         
         CB_Vendedor.setModel(modelo);
+        
+        
         
     }
     
@@ -592,11 +668,51 @@ public class MainUI extends javax.swing.JFrame {
         DefaultComboBoxModel modelo = (DefaultComboBoxModel)CB_Vehiculo.getModel();
         modelo.removeAllElements();
         
-        for (Vehiculo vehiculos : vehiculos) {
+        File VehiculosA = null;
+        
+        
+        
+        try {
             
-            modelo.addElement(vehiculos.getMarca()+" "+vehiculos.getModelo());
+            VehiculosA = new File("./Vehiculos");
+            String vehiculosT = "";
+            Scanner read = new Scanner(VehiculosA);
+            while(read.hasNext()){
+                
+                vehiculosT+= read.next();
+            
+            }
+            
+            String [] vehiculosArray = vehiculosT.split("]");
+           
+            String [] tokens;
+            for (int i = 0; i < vehiculosArray.length; i++) {
+                
+                tokens = vehiculosArray[i].split(";");
+                for (int j = 0; j < tokens.length; j++) {
+                    
+                    if(j == 0){
+                        String pez = "";
+                        for (int k = 1; k < tokens[j].length(); k++) {
+                            
+                            pez+=tokens[j].charAt(k);
+                            
+                        }
+                        
+                        modelo.addElement(pez);
+                        
+                    }
+                    
+                }
+                
+            }    
+            
+        } catch (Exception e) {
+        
+            System.out.println(e.getMessage());
             
         }
+        
         
         CB_Vehiculo.setModel(modelo);
         
@@ -606,9 +722,56 @@ public class MainUI extends javax.swing.JFrame {
         DefaultComboBoxModel modelo = (DefaultComboBoxModel)CB_Cliente.getModel();
         modelo.removeAllElements();
         
-        for (Cliente clients : clientes) {
+        File clientesA = null;
+        
+        
+        
+        try {
             
-            modelo.addElement(clients.getNombre());
+            clientesA = new File("./Clientes");
+            String clientesT = "";
+            Scanner read = new Scanner(clientesA);
+            while(read.hasNext()){
+                
+                clientesT+= read.next();
+            
+            }
+            
+            String [] clientesArray = clientesT.split("]");
+           
+            String [] tokens;
+            for (int i = 0; i < clientesArray.length; i++) {
+                
+                tokens = clientesArray[i].split(",");
+                
+                for (int j = 0; j < tokens.length; j++) {
+                    
+                    if(j == 0){
+                        
+                        String pez = "";
+                        for (int k = 1; k < tokens[j].length(); k++) {
+                            
+                            pez+=tokens[j].charAt(k);
+                            
+                        }
+                        
+                        modelo.addElement(pez);
+                        
+                    }
+                    
+                }
+                
+            }
+            read.close();
+            
+            
+            
+            
+            
+            
+        } catch (Exception e) {
+        
+            System.out.println(e.getStackTrace());
             
         }
         
@@ -649,6 +812,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
